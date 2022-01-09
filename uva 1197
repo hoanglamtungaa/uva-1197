@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<long>adjlist[30001];
+bool filll[30001];
+long dem;
+queue<long>q;
+void bfs ()
+{
+	while (!q.empty())
+	{
+		dem++;
+		long s=q.front(); q.pop();
+		for (int i=0;i<adjlist[s].size();i++)
+		{
+			long v=adjlist[s][i];
+			if (!filll[v]) filll[v]=true, q.push(v);
+		}
+	}
+}
+int main ()
+{
+	int n,m;
+	while (cin>>n>>m && !(m==0 && n==0))
+	{
+		long in[30001];
+		memset(filll,false,sizeof(filll));
+		for (int i=0;i<=30000;i++) adjlist[i].clear();
+		for (int i=0;i<m;i++) 
+		{
+			long k; cin>>k;
+			for (int i=0;i<k;i++) cin>>in[i];
+			for (int i=0;i<k;i++) for (int j=0;j<k;j++)
+			{
+				if (i!=j) adjlist[in[i]].push_back(in[j]);
+			}
+		}
+		dem=0; q.push(0); filll[0]=true;
+		bfs();
+		cout<<dem<<endl;
+	}
+}
